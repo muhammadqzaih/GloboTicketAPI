@@ -18,7 +18,7 @@ namespace GloboTicket.TicketManagement.Persistence
             this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GloboTicketDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("GloboTicketConnectionString")));
+                options.UseSqlite(configuration.GetConnectionString("GloboTicketConnectionString")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
