@@ -1,0 +1,26 @@
+﻿using GloboTicket.TicketManagement.Application.Contracts.Infrastructure;
+using GloboTicket.TicketManagement.Application.Models.Mail;
+using GloboTicket.TicketManagement.Infrastructurepro.Mail;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GloboTicket.TicketManagement.Infrastructurepro
+{
+    public static class InfrastructureServicesRegisteration
+    {
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+            services.AddTransient<IEmailService, EmailService>();
+
+            return services;
+        }
+    }
+}
