@@ -1,4 +1,5 @@
 ﻿using GloboTicket.TicketManagement.Application.Contracts.Persistence;
+using GloboTicket.TicketManagement.Infrastructure;
 using GloboTicket.TicketManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GloboTicket.TicketManagement.Infrastructure.ConfigurationServicesRegisteration
+namespace GloboTicket.TicketManagement.Persistence
 {
     public static class PersistenceServicesRegisteration
     {
