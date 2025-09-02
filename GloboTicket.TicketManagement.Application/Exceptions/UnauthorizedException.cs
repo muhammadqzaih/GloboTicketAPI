@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Exceptions
 {
-    public class BadRequestException : Exception
+    public class UnauthorizedException : Exception
     {
-        public BadRequestException(string message) : base(message) { }
-        public BadRequestException(string message, Exception innerException)
+        public UnauthorizedException(string message) : base(message) { }
+        public UnauthorizedException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }

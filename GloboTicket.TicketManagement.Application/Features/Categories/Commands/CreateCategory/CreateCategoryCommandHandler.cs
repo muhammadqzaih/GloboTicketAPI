@@ -27,24 +27,13 @@ namespace GloboTicket.TicketManagement.Application.Features.Categories.Commands.
            var validator = new CreateCagtegoryCommandValidator();
            var validationResult = await validator.ValidateAsync(request);
 
-           if (validationResult.Errors.Count > 0) 
-            {
-                createCategoryCommandResponse.Success = false;
-                createCategoryCommandResponse.ValidationErrors = new List<string>();
-                foreach (var error in validationResult.Errors) 
-                {
-                    createCategoryCommandResponse.ValidationErrors.Add(error.ErrorMessage);
-                }
-            }
+      
+         var category = new Category { Name = request.Name };
 
-            if (createCategoryCommandResponse.Success)
-            {
-                var category = new Category { Name = request.Name };
-
-                category = await _categoryRepository.AddAsync(category);
-                createCategoryCommandResponse.Category = _mapper.Map<CreateCategoryDto>
-                    (category);
-            }
+         category = await _categoryRepository.AddAsync(category);
+         createCategoryCommandResponse.Category = _mapper.Map<CreateCategoryDto>
+         (category);
+         
 
             return createCategoryCommandResponse;
          }

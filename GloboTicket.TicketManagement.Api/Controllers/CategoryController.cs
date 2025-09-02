@@ -1,4 +1,5 @@
-﻿using GloboTicket.TicketManagement.Application.Features.Categories.Commands.CreateCategory;
+﻿using GloboTicket.TicketManagement.Api.Common;
+using GloboTicket.TicketManagement.Application.Features.Categories.Commands.CreateCategory;
 using GloboTicket.TicketManagement.Application.Features.Categories.Queries.GetCategoriesList;
 using GloboTicket.TicketManagement.Application.Features.Categories.Queries.GetCategoriesListWithEvents;
 using MediatR;
@@ -19,32 +20,44 @@ namespace GloboTicket.TicketManagement.Api.Controllers
 
         [HttpGet("all", Name = "GetAllCategories")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<CategoriesListVm>>> GetAllCategories()
+        public async Task<ActionResult<ApiResponse<List<CategoriesListVm>>>> GetAllCategories()
         {
-
             var dtos = await _mediator.Send(new GetCategoriesListQuery());
-            return Ok(dtos);
-        }
 
+            return Ok(new ApiResponse<List<CategoriesListVm>>
+            {
+                Message = "Categories retrieved successfully",
+                Data = dtos
+            });
+        }
 
         [HttpGet("allwithevents", Name = "GetCategoriesWithEvents")]
         [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<CategoryEventListVm>>>
+        public async Task<ActionResult<ApiResponse<List<CategoryEventListVm>>>>
             GetCategoriesWithEvents(bool includeHistory)
         {
-            var dtos = await _mediator
-                .Send(new GetCategoriesListWithEventsQuery() { IncludeHistory = includeHistory });
+            var dtos = await _mediator.Send(
+                new GetCategoriesListWithEventsQuery { IncludeHistory = includeHistory });
 
-            return Ok(dtos);
+            return Ok(new ApiResponse<List<CategoryEventListVm>>
+            {
+                Message = "Categories with events retrieved successfully",
+                Data = dtos
+            });
         }
 
         [HttpPost(Name = "AddCategory")]
-        public async Task<ActionResult<CreateCategoryCommandResponse>> Create(
+        public async Task<ActionResult<ApiResponse<CreateCategoryCommandResponse>>> Create(
             [FromBody] CreateCategoryCommand createCategoryCommand)
         {
-            var categoryId = await _mediator.Send(createCategoryCommand);
-            return Ok(categoryId);
+            var response = await _mediator.Send(createCategoryCommand);
+
+            return Ok(new ApiResponse<CreateCategoryCommandResponse>
+            {
+                Message = "Category created successfully",
+                Data = response
+            });
         }
     }
 }
