@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace GloboTicket.TicketManagement.Domain.Entities
 {
-    internal class Event
+    public class Event
     {
+        public Guid EventId { get; set; }
+        public string EventName { get; set; } = string.Empty;
+        public int EventPrice { get; set; }
+        public string? Artist { get; set; }
+        public DateTime? Date { get; set; }
+        public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; } = default!;
     }
 }
