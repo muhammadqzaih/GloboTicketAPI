@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Exceptions
 {
-    public class BadRequestException : Exception
+    public class ConflictException : Exception
     {
-        public BadRequestException(string message) : base(message) { }
-        public BadRequestException(string message, Exception innerException)
+        public ConflictException(string message) : base(message) { }
+        public ConflictException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using GloboTicket.TicketManagement.Application.Contracts.Persistence;
+using GloboTicket.TicketManagement.Application.Exceptions; 
 using GloboTicket.TicketManagement.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Features.Events.Queries.GetEventDetails
@@ -26,13 +24,19 @@ namespace GloboTicket.TicketManagement.Application.Features.Events.Queries.GetEv
             _mapper = mapper;
         }
 
-        public async Task<EventDetailsVm> Handle(GetEventDetailsQuery request, 
+        public async Task<EventDetailsVm> Handle(GetEventDetailsQuery request,
             CancellationToken cancellationToken)
         {
             var @event = await _eventRepository.GetByIdAsync(request.Id);
+            if (@event == null)
+                throw new NotFoundException($"Event not found.");
+
             var eventDetailsDto = _mapper.Map<EventDetailsVm>(@event);
 
             var eventCategory = await _categoryRepository.GetByIdAsync(@event.CategoryId);
+            if (eventCategory == null)
+                throw new NotFoundException($"Category not found.");
+
             eventDetailsDto.Category = _mapper.Map<CategoryDto>(eventCategory);
 
             return eventDetailsDto;

@@ -32,9 +32,9 @@ namespace GloboTicket.TicketManagement.Infrastructure.Repositories
             await _context.SaveChangesAsync();    
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
-           return await _context.Set<T>().FindAsync();
+            return await _context.Set<T>().FindAsync(new object[] { id });
         }
 
         public async Task<IReadOnlyList<T>> ListAllAsync()

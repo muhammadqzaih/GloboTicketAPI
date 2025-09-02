@@ -18,11 +18,11 @@ namespace GloboTicket.TicketManagement.Persistence
             this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<GloboTicketDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("GloboTicketConnectionString")));
+                options.UseSqlite(configuration.GetConnectionString("GloboTicketConnectionString")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
-            services.AddScoped<IOrderRepository, >();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services.BuildServiceProvider();
