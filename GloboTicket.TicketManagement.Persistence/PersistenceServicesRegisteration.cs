@@ -22,7 +22,7 @@ namespace GloboTicket.TicketManagement.Persistence
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
-            services.AddScoped<IOrderRepository, >();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services.BuildServiceProvider();

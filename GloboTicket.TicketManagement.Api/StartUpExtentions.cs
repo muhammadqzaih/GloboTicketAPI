@@ -28,7 +28,7 @@ namespace GloboTicket.TicketManagement.Api
             builder.Services.AddCors(
                 options => options.AddPolicy(
                     "open",
-                    policy => policy.WithOrigins([builder.Configuration["ApiUrl"] ?? "https://localhost:7081",
+                    policy => policy.WithOrigins([builder.Configuration["ApiUrl"] ?? "https ",
                         builder.Configuration["BlazorUrl"] ?? "https://localhost:7080"])
             .AllowAnyMethod()
             .SetIsOriginAllowed(pol => true)
@@ -36,7 +36,7 @@ namespace GloboTicket.TicketManagement.Api
             .AllowCredentials()));
 
             //builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen();
 
             return builder.Build();
         }
@@ -44,6 +44,13 @@ namespace GloboTicket.TicketManagement.Api
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
             app.UseCors("open");
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
             app.UseHttpsRedirection();
             app.MapControllers();
             return app;
